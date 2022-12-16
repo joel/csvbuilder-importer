@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# require "csvbuilder/core"
 require "csvbuilder/importer"
 
 require "#{Dir.pwd}/spec/support/shared_context/with_context.rb"
