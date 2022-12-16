@@ -32,5 +32,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activemodel", "5.2.8.1"
   spec.add_dependency "activesupport", "5.2.8.1"
+
+  spec.add_dependency "csvbuilder-core"
   spec.metadata["rubygems_mfa_required"] = "true"
 end

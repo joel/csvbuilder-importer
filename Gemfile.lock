@@ -10,6 +10,7 @@ PATH
     csvbuilder-importer (0.1.0)
       activemodel (= 5.2.8.1)
       activesupport (= 5.2.8.1)
+      csvbuilder-core
 
 GEM
   remote: https://rubygems.org/
@@ -80,9 +81,9 @@ PLATFORMS
 DEPENDENCIES
   csvbuilder-core!
   csvbuilder-importer!
-  rake (~> 13.0)
-  rspec (~> 3.0)
-  rubocop (~> 1.21)
+  rake
+  rspec
+  rubocop
   rubocop-performance
   rubocop-rake
   rubocop-rspec
