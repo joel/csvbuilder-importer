@@ -2,20 +2,19 @@
 
 require "spec_helper"
 
-# require "csvbuilder/importer/concerns/import/attributes"
 require "csvbuilder/importer/internal/import/attribute"
 
 module Csvbuilder
   module Import
     RSpec.describe Attribute do
       describe "instance" do
-        let(:parsed_model_errors) { nil }
+        let(:import_errors) { nil }
         let(:row_model_class)     { Class.new BasicImportModel }
         let(:source_value)        { "alpha" }
         let(:source_row)          { [source_value, "original_beta"] }
         let(:row_model)           { row_model_class.new(source_row) }
         let(:options)             { {} }
-        let(:instance)            { described_class.new(:alpha, source_value, parsed_model_errors, row_model) }
+        let(:instance)            { described_class.new(:alpha, source_value, import_errors, row_model) }
 
         it_behaves_like "has_needed_value_methods"
 
@@ -32,8 +31,8 @@ module Csvbuilder
             expect(value).to eql("whatever")
           end
 
-          context "with empty parsed_model_errors" do
-            let(:parsed_model_errors) { [] }
+          context "with empty import_errors" do
+            let(:import_errors) { [] }
 
             it "returns the result" do
               expect(value).to eql("alpha")

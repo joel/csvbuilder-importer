@@ -3,21 +3,30 @@
 require "csvbuilder/core/concerns/attributes_base"
 
 require "csvbuilder/importer/internal/import/attribute"
-require "csvbuilder/importer/concerns/import/parsed_model"
 
 module Csvbuilder
   module Import
     module Attributes
       extend ActiveSupport::Concern
       include AttributesBase
-      include ParsedModel
 
       included do
         ensure_attribute_method
       end
 
+      def valid?(*args)
+        is_valid = super
+
+        # The method attribute_objects was called by the valid? method through
+        # the attribute getters. The memoization must be cleared now to propagate
+        # the errors into the Attribute(s).
+        instance_variable_set(:@attribute_objects, nil) unless is_valid
+
+        is_valid
+      end
+
       def attribute_objects
-        @attribute_objects ||= _attribute_objects
+        @attribute_objects ||= _attribute_objects(errors)
       end
 
       protected
@@ -32,7 +41,7 @@ module Csvbuilder
 
       class_methods do
         def define_attribute_method(column_name)
-          super { original_attribute(column_name) }
+          return if super { original_attribute(column_name) }.nil?
         end
       end
     end

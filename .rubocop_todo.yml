@@ -82,7 +82,6 @@ Style/Documentation:
     - 'test/**/*'
     - 'lib/csvbuilder/importer/concerns/import/attributes.rb'
     - 'lib/csvbuilder/importer/concerns/import/base.rb'
-    - 'lib/csvbuilder/importer/concerns/import/parsed_model.rb'
     - 'lib/csvbuilder/importer/internal/import/attribute.rb'
     - 'lib/csvbuilder/importer/public/import/file_model.rb'
 

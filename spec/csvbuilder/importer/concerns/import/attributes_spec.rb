@@ -7,7 +7,8 @@ module Csvbuilder
     RSpec.describe Attributes do
       let(:row_model_class) { Class.new BasicImportModel }
       let(:source_row)      { %w[alpha beta] }
-      let(:instance)        { row_model_class.new(source_row) }
+      let(:options)         { { foo: :bar } }
+      let(:instance)        { row_model_class.new(source_row, options) }
 
       describe "instance" do
         describe "define methods" do
@@ -22,20 +23,35 @@ module Csvbuilder
             expect(attribute_objects.values.map(&:class)).to eql [Csvbuilder::Import::Attribute] * 2
           end
 
-          context "when invalid and invalid parsed_model" do
+          context "when invalid" do
             let(:row_model_class) do
               Class.new(BasicImportModel) do
-                validates :alpha, presence: true
+                validates :alpha, format: { with: /\A\d+\z/ }
+
+                def self.name
+                  "BasicImportModelWithValidation"
+                end
+
+                def self.format_cell(*args)
+                  args[0..1].join(" :: - :: ")
+                end
               end
             end
-            let(:source_row) { [] }
 
             it "returns the cells with the right attributes" do
+              allow(instance).to receive(:valid?).and_call_original
+
+              expect(instance.valid?).to be false
+              expect(instance.errors.messages).to eql({ alpha: ["is invalid"], beta: [] })
+              expect(instance.errors.full_messages).to eql(["Alpha is invalid"])
+
               values = attribute_objects.values
 
               expect(values.map(&:column_name)).to eql %i[alpha beta]
-              expect(values.map(&:source_value)).to eql [nil, nil]
-              # expect(values.map(&:attribute_errors)).to eql [[], ["can't be blank"]]
+              expect(values.map(&:value)).to eql [nil,  "beta :: - :: beta"]
+              expect(values.map(&:source_value)).to eql %w[alpha beta]
+              expect(values.map(&:parsed_value)).to eql ["alpha :: - :: alpha", "beta :: - :: beta"]
+              expect(values.map(&:attribute_errors)).to eql [["is invalid"], []]
             end
           end
         end
