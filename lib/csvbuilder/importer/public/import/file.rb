@@ -23,9 +23,9 @@ module Csvbuilder
       # @param [Import] row_model_class model class returned for importing
       # @param context [Hash] context passed to the {Import}
       def initialize(file_path, row_model_class, context = {})
-        @csv = Csv.new(file_path)
+        @csv             = ::Csvbuilder::Import::Csv.new(file_path) # Full namespace provided to avoid confusion with Ruby CSV class.
         @row_model_class = row_model_class
-        @context = context.to_h.symbolize_keys
+        @context         = context.to_h.symbolize_keys
         reset
       end
 
