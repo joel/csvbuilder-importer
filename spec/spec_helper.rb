@@ -2,6 +2,8 @@
 
 require "csvbuilder/importer"
 
+require "#{Dir.pwd}/spec/support/shared_context/with_context.rb"
+
 Dir["#{Dir.pwd}/spec/support/**/*.rb"].sort.each { |f| require f }
 
 RSpec.configure do |config|
@@ -16,4 +18,5 @@ RSpec.configure do |config|
   end
 
   config.include CsvFilePaths
+  config.include WithContext
 end
