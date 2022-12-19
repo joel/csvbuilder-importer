@@ -4,7 +4,7 @@ PATH
     csvbuilder-importer (0.1.0)
       activemodel (= 5.2.8.1)
       activesupport (= 5.2.8.1)
-      csvbuilder-core
+      csvbuilder-core (= 0.1.0)
 
 GEM
   remote: https://rubygems.org/
