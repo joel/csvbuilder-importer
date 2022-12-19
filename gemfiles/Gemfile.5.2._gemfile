@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 # Runtime dependencies
 gem "activesupport", "~> 5.2"
+gem "activemodel", "~> 5.2"
 
 # Development dependencies
 gem "rake"
