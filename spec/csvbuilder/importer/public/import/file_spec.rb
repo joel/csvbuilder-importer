@@ -90,20 +90,6 @@ module Csvbuilder
           end
         end
 
-        context "with file_model" do
-          let(:file_path) { file_model_1_row_path }
-          let(:instance)  { described_class.new file_path, FileImportModel }
-
-          it do
-            expect(next_row.source_row).to eql(["value 1", "value 2"])
-
-            3.times do
-              expect(instance.next).to be_nil
-              expect(instance.end_of_file?).to be true
-            end
-          end
-        end
-
         context "with badly formatted file" do
           let(:file_path) { syntax_bad_quotes_5_rows_path }
 
@@ -278,21 +264,11 @@ module Csvbuilder
           end
         end
 
-        shared_context "with file_model" do
-          let(:row_model_class) { FileImportModel }
-        end
-
         context "with mixed empty headers" do
           let(:file_path) { headers_with_mixed_empty_1_row_path }
 
           it "is invalid" do
             expect(valid_file).to be false
-          end
-
-          with_context "with file_model" do
-            it "is valid" do
-              expect(valid_file).to be true
-            end
           end
         end
 
@@ -302,12 +278,6 @@ module Csvbuilder
           it "is invalid with a nice message" do
             expect(valid_file).to be false
             expect(instance.errors.full_messages).to eql ["Headers count does not match. Given headers (0). Expected headers (2): alpha, beta"]
-          end
-
-          with_context "with file_model" do
-            it "is valid" do
-              expect(valid_file).to be true
-            end
           end
         end
       end
