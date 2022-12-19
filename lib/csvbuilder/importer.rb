@@ -14,5 +14,5 @@ require "active_support/core_ext/string"
 require "csvbuilder/core"
 
 require "csvbuilder/importer/public/import"
-require "csvbuilder/importer/public/import/file_model"
-require "csvbuilder/importer/public/import/file"
+
+require "csvbuilder/importer/internal/import/csv"
