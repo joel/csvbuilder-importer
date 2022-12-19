@@ -13,7 +13,7 @@ module Csvbuilder
         describe "#header_matchers" do
           subject(:header_matchers) { import_model_klass.header_matchers(context) }
 
-          let(:expected_header_matchers) { [/^:: - alpha - ::$/i, /^:: - beta - ::$/i] }
+          let(:expected_header_matchers) { [/^HEADER <- alpha -> HEADER$/i, /^HEADER <- beta -> HEADER$/i] }
 
           it { expect(header_matchers).to eql expected_header_matchers }
         end
@@ -22,9 +22,10 @@ module Csvbuilder
           context "when is a match" do
             subject(:index_header_match) { import_model_klass.index_header_match(some_cell, context) }
 
-            let(:some_cell) { ":: - beta - ::" }
+            let(:some_cell) { "HEADER <- alpha -> HEADER" }
 
-            it { expect(index_header_match).to be 1 }
+            it { expect(index_header_match).to be_truthy }
+            it { expect(index_header_match).to be 0 } # position of the header
           end
 
           context "when is not a match" do

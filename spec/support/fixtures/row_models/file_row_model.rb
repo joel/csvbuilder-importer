@@ -9,7 +9,7 @@ class FileRowModel
 
   class << self
     def format_header(column_name, _context)
-      ":: - #{column_name} - ::"
+      "HEADER <- #{column_name} -> HEADER"
     end
   end
 end

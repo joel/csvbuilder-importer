@@ -1,2 +1,2 @@
-,:: - alpha - ::,value 1
-,:: - beta - ::,value 2
+,HEADER <- alpha -> HEADER,value 1
+,HEADER <- beta -> HEADER,value 2
