@@ -17,7 +17,7 @@ module Csvbuilder
       define_model_callbacks :next
       define_model_callbacks :abort, :skip, only: :before
 
-      validate { errors.messages.merge!(csv.errors.messages) unless csv.valid? }
+      validate { errors.merge!(csv.errors) unless csv.valid? }
 
       # @param [String] file_path path of csv file
       # @param [Import] row_model_class model class returned for importing
