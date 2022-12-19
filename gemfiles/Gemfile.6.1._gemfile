@@ -5,7 +5,7 @@ source "https://rubygems.org"
 # Runtime dependencies
 gem "activesupport", "~> 6.1"
 gem "activemodel", "~> 6.1"
-gem "csvbuilder-core", "0.1.0"
+gem "csvbuilder-core", "0.1.1"
 
 # Development dependencies
 gem "rake"
