@@ -9,7 +9,7 @@ module Csvbuilder
 
       def initialize(column_name, source_value, attribute_errors, row_model)
         @source_value     = source_value
-        @attribute_errors = attribute_errors
+        @attribute_errors = attribute_errors || []
 
         super(column_name, row_model)
       end

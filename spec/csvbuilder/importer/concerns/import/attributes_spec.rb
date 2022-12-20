@@ -42,7 +42,7 @@ module Csvbuilder
               allow(instance).to receive(:valid?).and_call_original
 
               expect(instance.valid?).to be false
-              expect(instance.errors.messages).to eql({ alpha: ["is invalid"], beta: [] })
+              expect(instance.errors.full_messages).to eql ["Alpha is invalid"]
               expect(instance.errors.full_messages).to eql(["Alpha is invalid"])
 
               values = attribute_objects.values
