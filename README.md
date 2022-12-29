@@ -16,7 +16,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 # Usage
 
-Importing data from a CSV is critical and requires two validation layers. First, you need to ensure data in the CSV are correct, and Second, you need to provide data that respects the system's business logic before importing.
+Importing data from a CSV is critical and requires two validation layers. First, you need to ensure data from the CSV are correct, and Second, you need to check that data respects the business logic before inserting it into the system.
 
 To do that, `Csvbuilder::Import` use `ActiveModel::Validations` so you can write your validations in the `CsvImportModel`.
 
@@ -36,7 +36,7 @@ class UserCsvImportModel
 end
 ```
 
-To import, pass the file and the Import class.
+The import takes the CSV file and the Import class.
 
 ```ruby
 rows = Csvbuilder::Import::File.new(file.path, UserCsvImportModel).each
@@ -75,7 +75,7 @@ class UserCsvImportModel < UserCsvRowModel
   validates :last_name, presence: true, length: { minimum: 2 }
 
   def user
-    User.new(first_name: first_name, last_name: last_name, full_name: full_name)
+    User.new(first_name: first_name, last_name: last_name)
   end
 
   # Skip if the row is not valid,
@@ -125,8 +125,8 @@ class Importer < Csvbuilder::Import::File
   end
 
   after_next do
-    next true unless current_row_model
-    next true if current_row_model.valid?
+    next true unless current_row_model # End of File
+    next true if current_row_model.valid? # No Errors To Collect
 
     row_in_errors.append_errors(current_row_model)
   end
