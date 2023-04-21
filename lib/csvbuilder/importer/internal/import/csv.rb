@@ -23,7 +23,7 @@ module Csvbuilder
       # http://stackoverflow.com/questions/2650517/count-the-number-of-lines-in-a-file-without-reading-entire-file-into-memory
       # @return [Integer] the number of rows in the file, including empty new lines
       def size
-        @size ||= `wc -l #{file_path}`.split[0].to_i + 1
+        @size ||= ::File.readlines(file_path).length
       end
 
       # If the current position is at the headers, skip it and return it. Otherwise, only return false.
