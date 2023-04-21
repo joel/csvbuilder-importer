@@ -40,8 +40,7 @@ RSpec.describe "Csvbuilder::Import::ParsedModel" do
 
           it do
             expect(instance.valid?).to be false
-            expect(instance.errors.full_messages).to eql ["Id can't be blank",
-                                                          "Id is too short (minimum is 9 characters)"]
+            expect(instance.errors.full_messages.join(" ")).to match(/Id can(’|')t be blank Id is too short \(minimum is 9 characters\)/)
           end
         end
       end
