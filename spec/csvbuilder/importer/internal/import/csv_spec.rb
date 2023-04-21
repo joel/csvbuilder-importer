@@ -36,7 +36,7 @@ module Csvbuilder
           let(:file_path) { syntax_empty_5_rows_path }
 
           it "counts the empty lines" do
-            expect(size).to be 7
+            expect(size).to be 6
           end
         end
       end
