@@ -15,7 +15,8 @@ module Csvbuilder
 
       validate { begin; _ruby_csv; rescue StandardError => e; errors.add(:csv, e.message) end }
 
-      def initialize(file_path)
+      def initialize(file_path, custom_csv_engine = nil)
+        @custom_csv_engine = custom_csv_engine
         @file_path = file_path
         reset
       end
@@ -82,7 +83,9 @@ module Csvbuilder
       protected
 
       def _ruby_csv
-        CSV.open(file_path)
+        csv_engine = @custom_csv_engine || CSV
+
+        csv_engine.open(file_path)
       end
 
       def _read_row

@@ -22,10 +22,11 @@ module Csvbuilder
       # @param [String] file_path path of csv file
       # @param [Import] row_model_class model class returned for importing
       # @param context [Hash] context passed to the {Import}
+      # @opt [CSV] custom_csv_engine custom implementation of CSV class
       def initialize(file_path, row_model_class, context = {})
-        @csv             = ::Csvbuilder::Import::Csv.new(file_path) # Full namespace provided to avoid confusion with Ruby CSV class.
-        @row_model_class = row_model_class
         @context         = context.to_h.symbolize_keys
+        @row_model_class = row_model_class
+        @csv             = ::Csvbuilder::Import::Csv.new(file_path, context[:custom_csv_engine]) # Full namespace provided to avoid confusion with Ruby CSV class.
         reset
       end
 
