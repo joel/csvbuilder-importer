@@ -20,10 +20,10 @@ module Csvbuilder
         reset
       end
 
-      # https://gist.github.com/guilhermesimoes/d69e547884e556c3dc95?permalink_comment_id=4502636#gistcomment-4502636
+      # http://stackoverflow.com/questions/2650517/count-the-number-of-lines-in-a-file-without-reading-entire-file-into-memory
       # @return [Integer] the number of rows in the file, including empty new lines
       def size
-        @size ||= ::File.read(file_path).count($/)
+        @size ||= ::File.readlines(file_path).length
       end
 
       # If the current position is at the headers, skip it and return it. Otherwise, only return false.
