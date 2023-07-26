@@ -40,13 +40,14 @@ The import takes the CSV file and the Import class.
 
 ```ruby
 rows = Csvbuilder::Import::File.new(file.path, UserCsvImportModel).each
-row = rows.next
+row_enumerator = rows.each # It's essential to go through the Enumerator to benefit from the callbacks. See References[^1]
+row_model_instance = row_enumerator.next
 ```
 
 `Csvbuilder::Import` implement two essential methods:
 
 1. skip?
-2. abort?
+2. abort? # NOTE: abort can be trigger at the importer level too.
 
 You have to provide your implementation of the method `abort?`. If the method `abort?` returns true, the iteration will stop.
 
@@ -182,6 +183,42 @@ importer.row_in_errors.errors
 Thanks to the callback mechanism, the opportunities to interact with the import are immense. For instance, you can show the errors on a Web Form and offer the chance to the user to change the data and re-attempt.
 
 For long imports, you can show a progress bar to help customers cope with the import time; as you know, if errors have occurred, you can change the colour of the progress bar accordingly and offer the possibility to stop the import earlier.
+
+## Aborting an import
+
+There is a design challenge to handling an import line-by-line. If it makes the code more efficient and decoupled, we might have cases when we want to check something shared with all lines. The obvious ones are the headers. Let's say we want to check them and abort all imports if something wrong is detected. We probably don't want to add the abort conditioning on every line (Csvbuilder::Model or, more precisely, its extension Csvbuilder::Import). We would rather have it in the Importer itself. In that case, we can stop the Importer from invoking "abort!". Let's consider the following example:
+
+```ruby
+class Importer < Csvbuilder::Import::File
+
+  after_next do
+    if HeaderChecker.new(current_row_model).invalid?
+      abort!
+      next true # Keep going into #each and hit the callbacks
+    end
+  end
+
+end
+```
+
+```ruby
+context "with incorrect headers" do
+
+  should "not import data" do
+    importer = Importer.new(@file.path, @importer_class, @context)
+
+    row_enumerator = importer.each
+
+    assert_raises StopIteration do
+      row_enumerator.next
+    end
+  end
+end
+```
+
+## References
+
+- [^1] Csvbuilder::Import::File#each https://github.com/joel/csvbuilder-importer/blob/e8e6633a03dda4ae0e5d6775ec9d395dec553fbe/lib/csvbuilder/importer/public/import/file.rb#L66-L68
 
 ## Development
 

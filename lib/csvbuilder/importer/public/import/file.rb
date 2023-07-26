@@ -9,7 +9,7 @@ module Csvbuilder
       extend ActiveModel::Callbacks
       include ActiveModel::Validations
 
-      attr_reader :csv, :row_model_class, :index, :current_row_model, :previous_row_model, :context # -1 = start of file, 0 to infinity = index of row_model, nil = end of file, no row_model
+      attr_reader :interrupt, :csv, :row_model_class, :index, :current_row_model, :previous_row_model, :context # -1 = start of file, 0 to infinity = index of row_model, nil = end of file, no row_model
 
       delegate :size, :end_of_file?, :line_number, to: :csv
 
@@ -26,6 +26,7 @@ module Csvbuilder
         @csv             = ::Csvbuilder::Import::Csv.new(file_path) # Full namespace provided to avoid confusion with Ruby CSV class.
         @row_model_class = row_model_class
         @context         = context.to_h.symbolize_keys
+        @interrupt = false
         reset
       end
 
@@ -39,6 +40,7 @@ module Csvbuilder
         csv.reset
         @index = -1
         @current_row_model = nil
+        @interrupt = false
       end
 
       # Gets the next row model based on the context
@@ -74,7 +76,13 @@ module Csvbuilder
 
       # @return [Boolean] returns true, if the file should abort reading
       def abort?
-        !valid? || !!current_row_model.try(:abort?)
+        interrupt || !valid? || !!current_row_model.try(:abort?)
+      end
+
+      def abort!
+        @interrupt = true
+
+        nil
       end
 
       # @return [Boolean] returns true, if the file should skip `current_row_model`
