@@ -117,8 +117,18 @@ module Csvbuilder
       describe "#each" do
         subject(:each_row) { instance.each }
 
-        context "with abort" do
+        context "with abort from row model" do
           before { allow(instance).to receive(:abort?).and_return(true) }
+
+          it "never yields and call callbacks" do
+            allow(instance).to receive(:run_callbacks).with(:abort).once
+
+            expect { each_row.next }.to raise_error(StopIteration)
+          end
+        end
+
+        context "with abort from file importer" do
+          before { instance.abort! }
 
           it "never yields and call callbacks" do
             allow(instance).to receive(:run_callbacks).with(:abort).once
