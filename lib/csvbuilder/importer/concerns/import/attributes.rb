@@ -39,10 +39,8 @@ module Csvbuilder
       protected
 
       def _attribute_objects
-        index = -1
-
-        array_to_block_hash(self.class.column_names) do |column_name|
-          Attribute.new(column_name, source_row[index += 1], errors.to_hash[column_name], self)
+        self.class.column_names.to_h do |column_name|
+          [column_name, Attribute.new(column_name, read_attribute_for_validation(column_name), errors.to_hash[column_name], self)]
         end
       end
 
