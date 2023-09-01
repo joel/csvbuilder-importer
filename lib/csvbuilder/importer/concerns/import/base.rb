@@ -25,7 +25,13 @@ module Csvbuilder
 
         @line_number    = options[:line_number]
         @index          = options[:index]
-        @source_headers = options[:source_headers]
+        # options[:source_headers] can be an Exception or nil
+        @source_headers = case options[:source_headers]
+                          in Array
+                            options[:source_headers]
+                          else
+                            []
+                          end
 
         @previous       = options[:previous].try(:dup)
 
