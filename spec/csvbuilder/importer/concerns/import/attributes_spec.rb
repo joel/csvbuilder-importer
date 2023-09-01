@@ -7,7 +7,7 @@ module Csvbuilder
     RSpec.describe Attributes do
       let(:row_model_class) { Class.new BasicImportModel }
       let(:source_row)      { %w[alpha beta] }
-      let(:options)         { { foo: :bar } }
+      let(:options)         { { foo: :bar, source_headers: ["Alpha", "Beta Two"] } }
       let(:instance)        { row_model_class.new(source_row, options) }
 
       describe "instance" do
@@ -21,6 +21,11 @@ module Csvbuilder
           it "returns a hash of cells mapped to their column_name" do
             expect(attribute_objects.keys).to eql row_model_class.column_names
             expect(attribute_objects.values.map(&:class)).to eql [Csvbuilder::Import::Attribute] * 2
+
+            # ensure that attributes are correctly set
+            {alpha: "alpha", beta: "beta"}.each do |attr, value|
+              expect(attribute_objects[attr].value).to eql value
+            end
           end
 
           context "when invalid" do

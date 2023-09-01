@@ -15,7 +15,8 @@ module Csvbuilder
       end
 
       it do
-        expect(klass.new(%w[alpha beta]).attributes).to eql(alpha: "alpha", beta: "beta")
+        instance = klass.new(%w[alpha beta], source_headers: ["Alpha", "Beta"])
+        expect(instance.attributes).to eql(alpha: "alpha", beta: "beta")
       end
 
       it "has Csvbuilder::Model included" do

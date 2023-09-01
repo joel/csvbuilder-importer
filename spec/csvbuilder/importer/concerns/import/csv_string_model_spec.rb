@@ -5,8 +5,7 @@ require "spec_helper"
 RSpec.describe "Csvbuilder::Import::ParsedModel" do
   describe "instance" do
     let(:source_row) { %w[alpha beta] }
-    let(:options)    { { foo: :bar } }
-    let(:klass)      { BasicImportModel }
+    let(:options)    { { foo: :bar, source_headers: ["Id"] } }
     let(:instance)   { klass.new(source_row, options) }
 
     describe "#valid?" do
