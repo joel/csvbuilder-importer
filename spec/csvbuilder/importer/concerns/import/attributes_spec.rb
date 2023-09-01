@@ -28,6 +28,21 @@ module Csvbuilder
             end
           end
 
+          context "when provided in a different order to column definition" do
+            let(:source_row)      { %w[beta alpha] }
+            let(:options)         { { foo: :bar, source_headers: ["Beta Two", "Alpha"] } }
+
+            it "returns a hash of cells mapped to their column_name" do
+              expect(attribute_objects.keys).to eql row_model_class.column_names
+              expect(attribute_objects.values.map(&:class)).to eql [Csvbuilder::Import::Attribute] * 2
+
+              # ensure that attributes are correctly set
+              {alpha: "alpha", beta: "beta"}.each do |attr, value|
+                expect(attribute_objects[attr].value).to eql value
+              end
+            end
+          end
+
           context "when invalid" do
             let(:row_model_class) do
               Class.new(BasicImportModel) do
