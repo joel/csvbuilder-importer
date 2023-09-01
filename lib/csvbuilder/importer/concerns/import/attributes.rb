@@ -30,7 +30,10 @@ module Csvbuilder
       end
 
       def read_attribute_for_validation(attr)
-        source_row[self.class.column_names.index(attr)]
+        attr_index = source_headers.index(column_header(attr))
+        return source_row[attr_index] unless attr_index.nil?
+
+        nil
       end
 
       protected
