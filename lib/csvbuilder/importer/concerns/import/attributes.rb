@@ -30,16 +30,17 @@ module Csvbuilder
       end
 
       def read_attribute_for_validation(attr)
-        source_row[self.class.column_names.index(attr)]
+        attr_index = source_headers.index(column_header(attr))
+        return source_row[attr_index] unless attr_index.nil?
+
+        nil
       end
 
       protected
 
       def _attribute_objects
-        index = -1
-
-        array_to_block_hash(self.class.column_names) do |column_name|
-          Attribute.new(column_name, source_row[index += 1], errors.to_hash[column_name], self)
+        self.class.column_names.to_h do |column_name|
+          [column_name, Attribute.new(column_name, read_attribute_for_validation(column_name), errors.to_hash[column_name], self)]
         end
       end
 

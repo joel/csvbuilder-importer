@@ -8,7 +8,7 @@ shared_examples "column_method" do |mod, expectation = {}|
       row_model_class.send(:include, Csvbuilder::Model)
       row_model_class.send(:column, :alpha)
       row_model_class.send(:include, mod)
-      row_model_class.send(:column, :beta)
+      row_model_class.send(:column, :beta, header: "Beta Two")
     end
 
     it do

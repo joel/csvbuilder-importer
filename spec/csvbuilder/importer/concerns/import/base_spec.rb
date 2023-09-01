@@ -7,7 +7,8 @@ module Csvbuilder
     RSpec.describe Base do
       describe "instance" do
         let(:source_row)      { %w[alpha beta] }
-        let(:options)         { {} }
+        let(:source_headers)  { { source_headers: ["Alpha", "Beta Two"] } }
+        let(:options)         { source_headers }
         let(:row_model_class) { BasicImportModel }
         let(:instance)        { row_model_class.new(source_row, options) }
 
@@ -40,7 +41,7 @@ module Csvbuilder
         describe "#free_previous" do
           subject(:free_previous) { instance.free_previous }
 
-          let(:options) { { previous: row_model_class.new([]) } }
+          let(:options) { { previous: row_model_class.new([], source_headers), **source_headers } }
 
           it "makes previous nil" do
             expect { free_previous }.to change(instance, :previous).to(nil)
@@ -56,9 +57,12 @@ module Csvbuilder
             end
             let(:source_row) { [] }
             let(:options) do
-              { previous: row_model_class.new([],
+              {
+                previous: row_model_class.new([],
                                               previous: row_model_class.new(["alpha from previous > previous",
-                                                                             "beta"])) }
+                                                                             "beta"], source_headers), **source_headers),
+                **source_headers
+              }
             end
 
             it "grabs alpha from previous.previous" do
