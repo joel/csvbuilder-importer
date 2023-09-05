@@ -45,7 +45,7 @@ module Csvbuilder
 
       class_methods do
         def define_attribute_method(column_name)
-          return if super { original_attribute(column_name) }.nil?
+          nil if super { original_attribute(column_name) }.nil?
         end
       end
     end

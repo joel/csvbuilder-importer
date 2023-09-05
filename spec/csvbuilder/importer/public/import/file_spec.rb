@@ -99,7 +99,7 @@ module Csvbuilder
             expect(row.source_row).to eql %w[alpha beta]
 
             invalid_row = instance.next
-            expect(invalid_row).to be_invalid
+            expect(invalid_row).not_to be_valid
             expect(invalid_row.errors.full_messages).to eql ["Csv has Any value after quoted field isn't allowed in line 3."]
             expect(invalid_row.source_row).to eql []
 
@@ -107,8 +107,8 @@ module Csvbuilder
             expect(row).to be_valid
             expect(row.source_row).to eql %w[lang1 lang2]
 
-            expect(instance.next).to be_invalid
-            expect(instance.next).to be_invalid
+            expect(instance.next).not_to be_valid
+            expect(instance.next).not_to be_valid
             expect(instance.next).to be_nil
           end
         end

@@ -8,13 +8,13 @@ module Csvbuilder
   module Import
     RSpec.describe Attribute do
       describe "instance" do
-        let(:import_errors) { nil }
-        let(:row_model_class)     { Class.new BasicImportModel }
-        let(:source_value)        { "alpha" }
-        let(:source_row)          { [source_value, "original_beta"] }
-        let(:row_model)           { row_model_class.new(source_row) }
-        let(:options)             { {} }
-        let(:instance)            { described_class.new(:alpha, source_value, import_errors, row_model) }
+        let(:import_errors)   { nil }
+        let(:row_model_class) { Class.new BasicImportModel }
+        let(:source_value)    { "alpha" }
+        let(:source_row)      { [source_value, "original_beta"] }
+        let(:row_model)       { row_model_class.new(source_row) }
+        let(:options)         { {} }
+        let(:instance)        { described_class.new(:alpha, source_value, import_errors, row_model) }
 
         it_behaves_like "has_needed_value_methods"
 
@@ -36,6 +36,14 @@ module Csvbuilder
 
             it "returns the result" do
               expect(value).to eql("alpha")
+            end
+          end
+
+          context "with import_errors" do
+            let(:import_errors) { [:whatever] }
+
+            it "returns nil" do
+              expect(value).to be_nil
             end
           end
         end
