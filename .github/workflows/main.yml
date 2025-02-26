@@ -15,10 +15,10 @@ jobs:
         with:
           fetch-depth: '1'
       -
-        name: Install ruby 2.7.7
+        name: Install ruby 3.4.2
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.7
+          ruby-version: 3.4.2
       -
         name: Run Lint
         run: |
@@ -40,25 +40,25 @@ jobs:
         include:
           -
             name: "Default"
-            ruby: 2.7.8
+            ruby: 3.4.2
             gemfile: Gemfile
           -
-            ruby: 2.7.8
+            ruby: 3.4.2
             gemfile: gemfiles/Gemfile.5.2._gemfile
           -
-            ruby: 2.7.8
+            ruby: 3.4.2
             gemfile: gemfiles/Gemfile.6.1._gemfile
           -
-            ruby: 3.0.6
+            ruby: 3.4.2
             gemfile: gemfiles/Gemfile.6.1._gemfile
           -
-            ruby: 3.2.2
+            ruby: 3.4.2
             gemfile: gemfiles/Gemfile.7.0._gemfile
           -
             ruby: head
             gemfile: gemfiles/Gemfile.7.0._gemfile
           -
-            ruby: 3.2.2
+            ruby: 3.4.2
             gemfile: gemfiles/rails_edge.gemfile
           -
             ruby: head
