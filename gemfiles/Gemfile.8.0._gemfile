@@ -3,9 +3,11 @@
 source "https://rubygems.org"
 
 # Runtime dependencies
-gem "activesupport", "~> 5.2"
-gem "activemodel", "~> 5.2"
+gem "activesupport", "~> 8.0"
+gem "activemodel", "~> 8.0"
 gem "csvbuilder-core", "0.1.1"
+gem "csv"
+gem "ostruct"
 
 # Development dependencies
 gem "rake"

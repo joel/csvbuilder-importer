@@ -5,6 +5,8 @@ source "https://rubygems.org"
 # Runtime dependencies
 gem "activemodel", github: "rails/rails", branch: "main"
 gem "activesupport", github: "rails/rails", branch: "main"
+gem "csv"
+gem "ostruct"
 
 gem "csvbuilder-core"
 
