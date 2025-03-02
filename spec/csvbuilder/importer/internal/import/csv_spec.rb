@@ -48,7 +48,7 @@ module Csvbuilder
 
       def first_row?(instance)
         expect(instance.line_number).to be 1
-        expect(instance.current_row).to eql %w[alpha beta]
+        expect(instance.current_row).to eql ["Alpha", "Beta Two"]
       end
 
       describe "#skip_headers" do
@@ -57,7 +57,7 @@ module Csvbuilder
         it "goes to the second row and doesn't move" do
           start_of_file? instance
 
-          expect(instance.skip_headers).to eql %w[alpha beta]
+          expect(instance.skip_headers).to eql ["Alpha", "Beta Two"]
           expect(instance.skip_headers).to be false
 
           first_row? instance
@@ -67,7 +67,7 @@ module Csvbuilder
           start_of_file? instance
 
           instance.headers
-          expect(skip_headers).to eql %w[alpha beta]
+          expect(skip_headers).to eql ["Alpha", "Beta Two"]
 
           first_row? instance
         end
@@ -79,7 +79,7 @@ module Csvbuilder
         it "returns the header without changing the state" do
           start_of_file? instance
 
-          expect(headers).to eql %w[alpha beta]
+          expect(headers).to eql ["Alpha", "Beta Two"]
 
           start_of_file? instance
         end
@@ -97,12 +97,12 @@ module Csvbuilder
         subject(:reset) { instance.reset }
 
         it "sets the state back to reset" do
-          expect(instance.read_row).to eql %w[alpha beta]
+          expect(instance.read_row).to eql ["Alpha", "Beta Two"]
           expect(instance.next_row).to eql %w[lang1 lang2]
           first_row? instance
           expect(reset).to be true
           start_of_file? instance
-          expect(instance.read_row).to eql %w[alpha beta]
+          expect(instance.read_row).to eql ["Alpha", "Beta Two"]
         end
       end
 
@@ -129,17 +129,17 @@ module Csvbuilder
         it "returns the next row without changing the state" do
           start_of_file? instance
 
-          expect(next_row).to eql %w[alpha beta]
-          expect(next_row).to eql %w[alpha beta]
+          expect(next_row).to eql ["Alpha", "Beta Two"]
+          expect(next_row).to eql ["Alpha", "Beta Two"]
 
           start_of_file? instance
 
-          expect(instance.read_row).to eql %w[alpha beta]
+          expect(instance.read_row).to eql ["Alpha", "Beta Two"]
         end
 
         it "sets allows the header to be available" do
           next_row
-          expect(instance.headers).to eql %w[alpha beta]
+          expect(instance.headers).to eql ["Alpha", "Beta Two"]
         end
       end
 
@@ -147,7 +147,7 @@ module Csvbuilder
         subject(:read_row) { instance.read_row }
 
         it "works and goes to end of file" do
-          expect(instance.read_row).to eql %w[alpha beta]
+          expect(instance.read_row).to eql ["Alpha", "Beta Two"]
           expect(instance.read_row).to eql %w[lang1 lang2]
           expect(instance.read_row).to be_nil
           expect(instance.read_row).to be_nil
@@ -156,7 +156,7 @@ module Csvbuilder
 
         it "sets allows the header to be available" do
           read_row
-          expect(instance.headers).to eql %w[alpha beta]
+          expect(instance.headers).to eql ["Alpha", "Beta Two"]
         end
 
         context "with empty lines" do
@@ -166,7 +166,7 @@ module Csvbuilder
             expect(instance.read_row).to eql []
             expect(instance.line_number).to be 1
 
-            expect(instance.read_row).to eql %w[alpha beta]
+            expect(instance.read_row).to eql ["Alpha", "Beta Two"]
             expect(instance.line_number).to be 2
           end
         end
@@ -178,7 +178,7 @@ module Csvbuilder
             expect(instance.read_row.to_s).to eql "Illegal quoting in line 1."
             expect(instance.line_number).to be 1
 
-            expect(instance.read_row).to eql %w[alpha beta]
+            expect(instance.read_row).to eql ["Alpha", "Beta Two"]
             expect(instance.line_number).to be 2
 
             expect(instance.read_row.to_s).to eql "Any value after quoted field isn't allowed in line 3."
