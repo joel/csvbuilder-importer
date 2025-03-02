@@ -11,9 +11,13 @@ gem "ostruct"
 gem "csvbuilder-core"
 
 # Development dependencies
+gem "activerecord", github: "rails/rails", branch: "main"
+gem "database_cleaner-active_record"
+gem "ostruct"
 gem "rake"
 gem "rspec"
 gem "rubocop"
 gem "rubocop-performance"
 gem "rubocop-rake"
 gem "rubocop-rspec"
+gem "sqlite3"
