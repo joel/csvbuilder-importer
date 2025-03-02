@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    csvbuilder-importer (0.1.5.1)
+    csvbuilder-importer (0.2.0)
       activemodel (>= 5.2)
       activesupport (>= 5.2)
       csv
@@ -12,6 +12,10 @@ GEM
   specs:
     activemodel (8.0.1)
       activesupport (= 8.0.1)
+    activerecord (8.0.1)
+      activemodel (= 8.0.1)
+      activesupport (= 8.0.1)
+      timeout (>= 0.4.0)
     activesupport (8.0.1)
       base64
       benchmark (>= 0.3)
@@ -35,6 +39,10 @@ GEM
     csvbuilder-core (0.1.4)
       activesupport (>= 5.2)
       csv
+    database_cleaner-active_record (2.2.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     diff-lcs (1.6.0)
     drb (2.2.1)
     i18n (1.14.7)
@@ -44,6 +52,7 @@ GEM
     lint_roller (1.1.0)
     logger (1.6.6)
     minitest (5.25.4)
+    ostruct (0.6.1)
     parallel (1.26.3)
     parser (3.3.7.1)
       ast (~> 2.4.1)
@@ -65,7 +74,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.2)
-    rubocop (1.73.0)
+    rubocop (1.73.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -90,6 +99,17 @@ GEM
       rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
+    sqlite3 (2.6.0-aarch64-linux-gnu)
+    sqlite3 (2.6.0-aarch64-linux-musl)
+    sqlite3 (2.6.0-arm-linux-gnu)
+    sqlite3 (2.6.0-arm-linux-musl)
+    sqlite3 (2.6.0-arm64-darwin)
+    sqlite3 (2.6.0-x86-linux-gnu)
+    sqlite3 (2.6.0-x86-linux-musl)
+    sqlite3 (2.6.0-x86_64-darwin)
+    sqlite3 (2.6.0-x86_64-linux-gnu)
+    sqlite3 (2.6.0-x86_64-linux-musl)
+    timeout (0.4.3)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.1.4)
@@ -98,17 +118,29 @@ GEM
     uri (1.0.3)
 
 PLATFORMS
-  arm64-darwin-24
-  ruby
+  aarch64-linux-gnu
+  aarch64-linux-musl
+  arm-linux-gnu
+  arm-linux-musl
+  arm64-darwin
+  x86-linux-gnu
+  x86-linux-musl
+  x86_64-darwin
+  x86_64-linux-gnu
+  x86_64-linux-musl
 
 DEPENDENCIES
+  activerecord
   csvbuilder-importer!
+  database_cleaner-active_record
+  ostruct
   rake
   rspec
   rubocop
   rubocop-performance
   rubocop-rake
   rubocop-rspec
+  sqlite3
 
 BUNDLED WITH
    2.6.2

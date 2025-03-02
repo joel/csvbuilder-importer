@@ -20,7 +20,7 @@ module Csvbuilder
         subject(:headers) { instance.headers }
 
         it "returns the headers" do
-          expect(headers).to eql %w[alpha beta]
+          expect(headers).to eql(["Alpha", "Beta Two"])
         end
 
         context "with bad header" do
@@ -96,7 +96,7 @@ module Csvbuilder
           it "returns invalid row" do
             row = instance.next
             expect(row).to be_valid
-            expect(row.source_row).to eql %w[alpha beta]
+            expect(row.source_row).to eql ["Alpha", "Beta Two"]
 
             invalid_row = instance.next
             expect(invalid_row).not_to be_valid
@@ -270,7 +270,8 @@ module Csvbuilder
           Class.new(described_class) do
             validate :headers_count
             def self.name
-              "Test" end
+              "Test"
+            end
           end
         end
 
@@ -287,7 +288,7 @@ module Csvbuilder
 
           it "is invalid with a nice message" do
             expect(valid_file).to be false
-            expect(instance.errors.full_messages).to eql ["Headers count does not match. Given headers (0). Expected headers (2): alpha, beta"]
+            expect(instance.errors.full_messages).to eql ["Headers count does not match. Given headers (0). Expected headers (2): alpha, beta."]
           end
         end
       end

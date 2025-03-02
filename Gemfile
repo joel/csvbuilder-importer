@@ -15,4 +15,11 @@ gem "rubocop-performance"
 gem "rubocop-rake"
 gem "rubocop-rspec"
 
+gem "activerecord"
+gem "database_cleaner-active_record"
+
+gem "sqlite3"
+
+gem "ostruct"
+
 # gem "csvbuilder-core", path: "../csvbuilder-core"

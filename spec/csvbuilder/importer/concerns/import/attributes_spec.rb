@@ -67,7 +67,7 @@ module Csvbuilder
             end
           end
 
-          it "returns the formatted_headers" do
+          it "returns the formatted_values" do
             expect(formatted_attributes).to eql(alpha: "alpha__alpha__#<OpenStruct>", beta: "beta__beta__#<OpenStruct>")
           end
         end
